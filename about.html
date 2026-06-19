@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — A Messed Up Flow of Time</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="about-screen">
+
+  <nav class="top-nav">
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('title') }}">Title Screen</a>
+  </nav>
+
+  <main class="about-container">
+    <h1>About the Author / Project</h1>
+    <p>
+      This project is a computational memoir: a distorted archive of poems,
+      fragments, dates, images, and selves arranged through time, motif,
+      memory, and recurrence.
+    </p>
+    <p>
+      The reader does not move through the work in one correct order. Each
+      reading path creates a temporary version of the memoir.
+    </p>
+    <p>
+      Date is evidence. Motif is memory. Position is interpretation.
+    </p>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select a Mode — A Messed Up Flow of Time</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="menu-screen">
+  <nav class="top-nav">
+    <a href="{{ url_for('title') }}">Title</a>
+    <a href="{{ url_for('about') }}">About the Author</a>
+  </nav>
+
+  <main class="menu-container">
+    <h1>Select a Mode</h1>
+    <div class="mode-grid">
+      {% for mode in modes %}
+      <a class="mode-card" href="{{ url_for('enter_mode', mode=mode.id) }}">
+        <h2>{{ mode.name }}</h2>
+        <p>{{ mode.description }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </main>
+</body>
+</html>

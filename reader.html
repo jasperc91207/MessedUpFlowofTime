@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ poem.title }} — A Messed Up Flow of Time</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="reader-screen">
+
+  <nav class="top-nav">
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('title') }}">Title Screen</a>
+    <a href="{{ url_for('browse', mode=mode) }}">Browse Poems</a>
+    <a href="{{ url_for('about') }}">About the Author</a>
+    <a href="{{ url_for('reset_history') }}" class="nav-reset">Reset Path</a>
+  </nav>
+
+  <aside class="history-sidebar">
+    <h3>Previous Entries</h3>
+    {% if history %}
+    <ul>
+      {% for entry in history %}
+      <li>
+        <a href="{{ url_for('reader', mode=mode, poem_id=entry.id) }}"
+           {% if entry.id == poem.id %}class="history-current"{% endif %}>
+          <span class="history-date">{{ entry.display_date }}</span>
+          {{ entry.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="history-empty">No previous entries.</p>
+    {% endif %}
+  </aside>
+
+  <main class="poem-reader">
+    <div class="poem-meta">
+      <span>{{ poem.display_date }}</span>
+      <span class="mode-label">{{ mode }} mode</span>
+    </div>
+
+    <h1>{{ poem.title }}</h1>
+
+    {% if poem.type == "poem" %}
+  <pre class="poem-text">{{ poem.text }}</pre>
+
+{% elif poem.type == "image" %}
+  {% if poem.image %}
+    <img class="entry-image"
+         src="{{ url_for('static', filename='images/' + poem.image) }}"
+         alt="{{ poem.title }}">
+  {% endif %}
+  {% if poem.text %}
+    <p class="image-caption">{{ poem.text }}</p>
+  {% endif %}
+
+{% elif poem.type in ["prose", "letter", "note"] %}
+  <div class="prose-text">
+    {% for paragraph in poem.text.split('\n\n') %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+  </div>
+
+{% else %}
+  <p class="unimplemented">This entry type is not yet implemented.</p>
+{% endif %}
+
+    <div class="motif-row">
+      {% for motif in poem.motifs %}
+      <span class="motif-tag">{{ motif }}</span>
+      {% endfor %}
+    </div>
+  </main>
+
+  <div class="next-control">
+    <a href="{{ url_for('reader', mode=mode, poem_id=next_poem_id) }}">
+      Next &rarr;
+    </a>
+  </div>
+
+</body>
+</html>

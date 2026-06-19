@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Poems — A Messed Up Flow of Time</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="browse-screen">
+
+  <nav class="top-nav">
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('title') }}">Title Screen</a>
+    <a href="{{ url_for('about') }}">About the Author</a>
+  </nav>
+
+  <main class="browse-container">
+    <h1>Browse Poems</h1>
+    <p class="browse-note">Reading within <strong>{{ mode }}</strong> mode. Click any entry to open it.</p>
+
+    <div class="browse-list">
+      {% for poem in poems %}
+      <a class="browse-row" href="{{ url_for('reader', mode=mode, poem_id=poem.id) }}">
+        <span class="browse-date">{{ poem.display_date }}</span>
+        <strong class="browse-title">{{ poem.title }}</strong>
+        <em class="browse-motifs">{{ ", ".join(poem.motifs[:3]) }}</em>
+      </a>
+      {% endfor %}
+    </div>
+  </main>
+
+</body>
+</html>
